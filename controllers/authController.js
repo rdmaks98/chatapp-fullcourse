@@ -81,12 +81,10 @@ exports.sendOTP = catchAsync(async (req, res, next) => {
 
   console.log(new_otp);
   // TODO send mail
-  mailService.sendEmail({
-    from: "shreyanshshah242@gmail.com",
+  await mailService.sendEmail({
     to: user.email,
     subject: "Verification OTP",
     html: otp(user.firstName, new_otp),
-    attachments: [],
   });
 
   res.status(200).json({
@@ -250,8 +248,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
     console.log(resetURL);
 
-    mailService.sendEmail({
-      from: "shreyanshshah242@gmail.com",
+    await mailService.sendEmail({
       to: user.email,
       subject: "Reset Password",
       html: resetPassword(user.firstName, resetURL),
